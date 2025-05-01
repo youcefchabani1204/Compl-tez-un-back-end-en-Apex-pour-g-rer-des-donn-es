@@ -1,0 +1,55 @@
+<template>
+    <lightning-card title="Sélecteur de livraison">
+
+
+        <template if:true={validationMessage}>
+            <div class="slds-m-around_medium">
+                <lightning-formatted-text value={validationMessage}></lightning-formatted-text>
+            </div>
+        </template>
+
+
+        <template if:true={orderValidated}>
+            <div class="slds-m-around_medium">
+                <button onclick={handleQuick} class="slds-button slds-button_brand slds-m-right_small">Livraison Rapide</button>
+                <button onclick={handleCheap} class="slds-button slds-button_brand slds-m-right_small">Livraison Economique</button>
+                <button if:true={boutonValidate} onclick={handleValidate} class="slds-button slds-button_brand">Valider La Livraison  </button>
+            </div>
+        </template>
+
+     
+        <template if:true={transporter}>
+            <div class="slds-box slds-m-around_medium">
+                <p><strong>Transporteur :</strong> {transporter.Transporter__r.Name}</p>
+                <p><strong>Délai (jours) :</strong> {transporter.delay__c}</p>
+                <p><strong>Prix (€) :</strong> {transporter.price__c}</p>
+            </div>
+            
+        </template>
+        <template  if:true={change}>
+        <button onclick={handleChange} class="slds-button slds-button_brand slds-m-right_small">Choisir un autre Transporteur</button>
+    </template>
+        <template  if:true={list}>
+        <lightning-combobox 
+        
+        name="transporter"
+        label="Choisissez un Transporteur "
+        placeholder="Selectionnez un Transporteur"
+        
+         options={alternativetransporters}
+         onchange={handleSelect}
+
+        
+         >
+        </lightning-combobox>
+    </template>
+    
+   
+        <template if:true={error}>
+            <div class="slds-text-color_error slds-m-around_medium">
+                Erreur : {error.body.message}
+            </div>
+        </template>
+    
+    </lightning-card>
+</template>
